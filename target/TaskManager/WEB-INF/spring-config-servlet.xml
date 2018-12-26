@@ -13,7 +13,7 @@
 	<bean id="datasource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="awsmysqldb.cz1lrnrc2tcn.us-east-1.rds.amazonaws.com:3306/sakila" />
+		<property name="url" value="jdbc:mysql://awsmysqldb.cz1lrnrc2tcn.us-east-1.rds.amazonaws.com:3306/sakila" />
 		<property name="username" value="root" />
 		<property name="password" value="Password1$" />
 	</bean>

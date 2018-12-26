@@ -51,12 +51,13 @@
             $scope.updateAddTest = "Add Task";
             $scope.idToBeUpdated = 0;
             $scope.alertmessage = "";
+            $scope.alertErrorMessage = "";
             $scope.priority = 0;
             //$scope.tasks = taskArray;
             $scope.taskName = "";
             $scope.parentTask = 0;
             $scope.startDate="2018-01-01";
-            $scope.endDate="2018-12-31";
+            $scope.endDate="2019-12-31";
             $scope.populateList = function(){
             	$http.get("/TaskManager/getTasks")
   					.then(function(response) {
@@ -118,10 +119,11 @@
             }
             $scope.taskSubmitted = function(){
                 $scope.alertmessage = "";
+                $scope.alertErrorMessage = "";
                 var startDate = new Date($scope.startDate);
                 var endDate = new Date($scope.endDate);
                 if((startDate - endDate) > 0){
-                    $scope.alertmessage = "Startdate cannot succeed enddate, task not added";
+                    $scope.alertErrorMessage = "Startdate cannot succeed enddate, task not added/updated";
                 }
                 else if($scope.updateAddTest == "Add Task"){ 
                 	var req={
@@ -137,11 +139,11 @@
                     	$scope.taskName = "";
                     	$scope.parentTask = 0;
                     	$scope.startDate="2018-01-01";
-                    	$scope.endDate="2018-12-31";
+                    	$scope.endDate="2019-12-31";
                     	$scope.updateAddTest = "Add Task";
                     	$scope.tasks = response.data;
                 	}, function(){
-                		$scope.alertmessage = "task creation error ";
+                		$scope.alertErrorMessage = "task creation error ";
                 	});
                     //$scope.tasks.push({ "task": $scope.taskName, "priority":$scope.priority, "startDate": formatDateForOutput($scope.startDate), "endDate": formatDateForOutput($scope.endDate), "parent":$scope.parentTask, "taskended":false });
                 }else if($scope.updateAddTest == "Update Task"){
@@ -158,23 +160,24 @@
                     	$scope.taskName = "";
                     	$scope.parentTask = 0;
                     	$scope.startDate="2018-01-01";
-                    	$scope.endDate="2018-12-31";
+                    	$scope.endDate="2019-12-31";
                     	$scope.updateAddTest = "Add Task";
                     	$scope.tasks = response.data;
                 	}, function(){
-                		$scope.alertmessage = "task updation error ";
+                		$scope.alertErrorMessage = "task updation error ";
                 	});
                     
                 }
             }
             $scope.resetForm = function(){
                 $scope.alertmessage = "";
+                $scope.alertErrorMessage = "";
                 $scope.priority = 0;
                 //$scope.tasks = taskArray;
                 $scope.taskName = "";
                 $scope.parentTask = 0;
                 $scope.startDate="2018-01-01";
-                $scope.endDate="2018-12-31";
+                $scope.endDate="2019-12-31";
                 $scope.updateAddTest = "Add Task";
             }
             $scope.updateTask = function(index){  //alert($scope.parentTask);
@@ -188,6 +191,7 @@
                     		$scope.showViewPage = false;
                     		$scope.showAddEditPage = true;
                     		$scope.alertmessage = "";
+                    		$scope.alertErrorMessage = "";
                     		$scope.priority = $scope.tasks[i].priority;
                     		$scope.taskName = $scope.tasks[i].task;
                     		$scope.startDate = $scope.tasks[i].startDate;
@@ -210,7 +214,7 @@
                 	$http(req).then(function(response){
                 		$scope.tasks = response.data;
                 	}, function(){
-                		$scope.alertmessage = "task updation error ";
+                		$scope.alertErrorMessage = "task termination error ";
                 	});
             }
             
@@ -266,6 +270,9 @@
                 <div class="alert alert-success mt-3" role="alert" ng-show="alertmessage">
                     {{alertmessage}}
                 </div>
+                <div class="alert alert-danger mt-3" role="alert" ng-show="alertErrorMessage">
+                    {{alertErrorMessage}}
+                </div>
                 <div class="row form-group mt-3">
                     <label class="col-md-12 control-lable" style="text-align:center"><h3>Manage Task</h3></label>
                 </div>
@@ -303,10 +310,12 @@
                     <label class="col-md-3 control-lable" style="text-align:right" for="startDate">Start Date*:</label>
                     <div class="col-md-8">
                         <div class="slidecontainer">
-                            <input type="date" min="2018-01-01" max="2018-12-31" value="2018-01-01" name="startDate" ng-model="startDate" required format-date></input>
+                            <input type="date" min="2018-01-01" max="2019-12-31" value="2018-01-01" name="startDate" ng-model="startDate" required format-date></input>
+                            <!-- 
                             <span style="color:blue">
                                     Start date should be in 2018.
                             </span>
+                             -->
                         </div>
                     </div>
                 </div>
@@ -314,10 +323,12 @@
                     <label class="col-md-3 control-lable" style="text-align:right" for="endDate">End Date*:</label>
                     <div class="col-md-8">
                         <div class="slidecontainer">
-                            <input type="date" min="2018-01-01" max="2018-12-31" value="2018-12-31" name="endDate" ng-model="endDate" required format-date></input>
+                            <input type="date" min="2018-01-01" max="2019-12-31" value="2019-12-31" name="endDate" ng-model="endDate" required format-date></input>
+                            <!-- 
                             <span style="color:blue">
                                     End date should be in 2018.
                             </span>
+                             -->
                         </div>
                     </div>
                 </div>
